@@ -1,63 +1,23 @@
-import Book from './modules/book.js';
-import Bookinterface from './modules/bookinterface.js';
-import Store from './modules/bookStore.js';
+// import Book from './modules/app.js';
 
-// Date and Time with Luxon
+import addBooks from './modules/addBook.js';
 
-import { DateTime } from './node_modules/luxon/build/es6/luxon.js';
+import showForm from './modules/showForm.js';
 
-// displaying book details
+import showBook from './modules/bookList.js';
 
-document.addEventListener('DOMContentLoaded', Bookinterface.bookDetails);
-// adding book
-document.querySelector('#bookForm').addEventListener('submit', (e) => {
-  e.preventDefault();
-  const title = document.getElementById('bookTitle').value;
-  const author = document.getElementById('bookAuthor').value;
-  const book = new Book(title, author);
+import showContact from './modules/ShowContact.js';
 
-  // Adding book to user interface
-  Bookinterface.addbook(book);
+import { DateTime } from './modules/luxon.js';
 
-  // add book to store
-  Store.addBook(book);
+addBooks();
 
-  Bookinterface.clearInput();
-});
+showContact();
 
-// Removing Book
+showForm();
 
-document.querySelector('#outputField').addEventListener('click', (e) => {
-  // remove book for interface
-  Bookinterface.deleteBook(e.target);
+showBook();
 
-  //    remove book for storage
-  Store.removeBook(e.target.parentElement.parentElement.firstChild.firstChild.textContent);
-});
-
-// navigation script
-const listview = document.getElementById('list');
-const formView = document.getElementById('addNew');
-const contactView = document.getElementById('contact');
-
-listview.addEventListener('click', () => {
-  document.getElementById('listviewMain').style.visibility = 'visible';
-  document.getElementById('form-div').style.visibility = 'hidden';
-  document.getElementById('contact-sec').style.visibility = 'hidden';
-});
-
-formView.addEventListener('click', () => {
-  document.getElementById('form-div').style.visibility = 'visible';
-  document.getElementById('contact-sec').style.visibility = 'hidden';
-  document.getElementById('listviewMain').style.visibility = 'hidden';
-});
-
-contactView.addEventListener('click', () => {
-  document.getElementById('contact-sec').style.visibility = 'visible';
-  document.getElementById('form-div').style.visibility = 'hidden';
-  document.getElementById('listviewMain').style.visibility = 'hidden';
-});
-
-const date = DateTime.now();
-const dateDisplay = document.querySelector('.date-container');
-dateDisplay.textContent = date.toJSDate();
+const now = DateTime.now();
+const time = document.querySelector('#date-time');
+time.innerHTML = now.toLocaleString(DateTime.DATETIME_MED);
